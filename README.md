@@ -2,6 +2,9 @@
 This repository contains examples of smart contracts developed for the Massa blockchain and used to test the [Massa Dart SDK](https://github.com/jwmdev/massa-dart/).
 
 
+## Smart contract deployment
+`node --loader ts-node/esm ./src/deploy.ts`
+
 ## Projects
 
 #### [Age](age/README.md)

@@ -45,7 +45,7 @@ const __dirname = path.dirname(path.dirname(__filename));
       {
         data: readFileSync(path.join(__dirname, 'build', 'main.wasm')), // smart contract bytecode
         coins: fromMAS(0.1), // coins for deployment
-        args: new Args().addString('Test'), // arguments for deployment
+        args: new Args().addString('Age'), // arguments for deployment
       } as ISCData,
       // Additional smart contracts can be added here for deployment
     ],

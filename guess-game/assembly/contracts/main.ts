@@ -1,15 +1,15 @@
 // The entry file of your WebAssembly module.
-import { Context, Storage, generateEvent, transferCoins, unsafeRandom } from '@massalabs/massa-as-sdk';
+import { Context, Storage, transferCoins, unsafeRandom, generateEvent } from '@massalabs/massa-as-sdk';
 import { Args, stringToBytes } from '@massalabs/as-types';
 
-/** 
+
+/**
  * define some constants
  */
 const intervals: u32 = 20;
 const attempts: u32 = 4;
-const randomKey: string = "random_key";
-const attemptsKey: string = "attempts_key";
-
+const randomKey: string = 'random_key';
+const attemptsKey: string = 'attempts_key';
 
 /**
  * This function is meant to be called only one time: when the contract is deployed.
@@ -30,25 +30,22 @@ export function constructor(binaryArgs: StaticArray<u8>): StaticArray<u8> {
   return [];
 }
 
-
 /**
  * This function starts the game by generating the random number
  * @param _ not applicable
  * @returns the emitted event serialized in bytes
  */
 export function start(_: StaticArray<u8>): StaticArray<u8> {
-  //const playerName = new Args(name).nextString().expect('missing player name');
+  // const playerName = new Args(name).nextString().expect('missing player name');
   const start = u32(abs(unsafeRandom()) % (100 - intervals));
   const end = start + intervals;
   let randNumber = generateRandomNumber(start);
   Storage.set(randomKey, randNumber.toString());
   Storage.set(attemptsKey, attempts.toString());
-  const response = `Guess the number between ${start} and ${end}. You have ${attempts} attempts!`
+  const response = `Guess the number between ${start} and ${end}. You have ${attempts} attempts!`;
   generateEvent(response);
   return stringToBytes(response);
 }
-
-
 
 /**
  * This function starts the game by generating the random number
@@ -56,9 +53,11 @@ export function start(_: StaticArray<u8>): StaticArray<u8> {
  * @returns the emitted event serialized in bytes
  */
 export function play(data: StaticArray<u8>): StaticArray<u8> {
-  //TODO: check if the guess number and number of attempts are made.
+  // TODO: check if the guess number and number of attempts are made.
 
-  const guessedNumber = new Args(data).nextU32().expect('missing guessed number');
+  const guessedNumber = new Args(data)
+    .nextU32()
+    .expect('missing guessed number');
   let currentRandom = u32.parse(Storage.get(randomKey));
   let currentAttempts = u32.parse(Storage.get(attemptsKey));
   let response: string;
@@ -83,6 +82,6 @@ export function play(data: StaticArray<u8>): StaticArray<u8> {
 
 // Generate a random number.
 function generateRandomNumber(start: u32): u32 {
-  const randNumber = u32(start + abs(unsafeRandom()) % intervals);
+  const randNumber = u32(start + (abs(unsafeRandom()) % intervals));
   return randNumber;
 }
