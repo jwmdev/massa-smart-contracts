@@ -5,6 +5,11 @@ This repository contains examples of smart contracts developed for the Massa blo
 ## Smart contract deployment
 `node --loader ts-node/esm ./src/deploy.ts`
 
+## Package update
+`npm install -g npm-check-updates`
+`ncu --upgrade`
+`npm install`
+
 ## Projects
 
 #### [Age](age/README.md)
